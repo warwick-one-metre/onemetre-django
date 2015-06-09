@@ -20,8 +20,10 @@
     
     <style>
       .tablelabel { text-align: right; font-weight: bold; }
-      .tablewrapper { width: 380px; padding: 0px; border: 1px #eee solid; margin: 10px auto 0 auto; }
-      .row { padding: 0;}
+      .tablewrapper { width: 380px; border: 1px #eee solid; margin: 10px auto 0 auto; }
+      .tablewrapper table { margin-bottom: 0; }
+      .tableupdated { font-size: 0.6em; font-weight: bold; }
+      .row { padding: 0; text-align: right;}
     </style>
   </head>
   <body role="document">
@@ -55,7 +57,7 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th colspan="4">External Environment ({{ latest_internal.time|date:"Y-m-d H:i:s" }})</th>
+                  <th colspan="4">External Environment</th>
                 </tr>
               </thead>
               <tbody>
@@ -76,7 +78,10 @@
                   <td>{{ latest_internal.air_pressure }} mbar</td>
                   <td class="tablelabel">Rain:</td>
                   <td>{{ latest_internal.rain_amount }} mm</td>
-                </tr> 
+                </tr>
+                <tr>
+                  <td class="tableupdated" colspan="4">Updated {{ latest_internal.time|date:"Y-m-d H:i:s" }}</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -86,7 +91,7 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th colspan="4">Dome Environment (xxx)</th>
+                  <th colspan="4">Dome Environment</th>
                 </tr>
               </thead>
               <tbody>
@@ -108,6 +113,9 @@
                   <td class="tablelabel">Covers:</td>
                   <td><span style="color: #FA0">Mixed</span></td>
                 </tr>
+                <tr>
+                  <td class="tableupdated" colspan="4">Updated XXX</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -119,7 +127,7 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th colspan="4">Power (xxx)</th>
+                  <th colspan="4">Power</th>
                 </tr>
               </thead>
               <tbody>
@@ -147,6 +155,9 @@
                   <td class="tablelabel">Dome:</td>
                   <td><span style="color: #C00">Disabled</span></td>
                 </tr>
+                <tr>
+                  <td class="tableupdated" colspan="4">Updated XXX</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -156,7 +167,7 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th colspan="4">Telescope (xxx)</th>
+                  <th colspan="4">Telescope</th>
                 </tr>
               </thead>
               <tbody>
@@ -172,6 +183,9 @@
                   <td class="tablelabel">Status:</td>
                   <td><span style="color: #999">IDLE</span></td>
                 </tr>
+                <tr>
+                  <td class="tableupdated" colspan="4">Updated XXX</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -179,12 +193,25 @@
       </div>
       <div class="row">
         <div class="col-sm-6">
-          <img width="100%" style="padding:0 10px" src="http://wasp.warwick.ac.uk/swasp/main//cam3/image.jpg" />
+          <img width="100%" style="padding:0 10px" src="http://wasp.warwick.ac.uk/swasp/main/cam3/image.jpg" />
         </div>
         <div class="col-sm-6">
-          <img width="100%" style="padding:0 10px" src="http://wasp.warwick.ac.uk/swasp/main//cam1/image.jpg" />
+          <img width="100%" style="padding:0 10px" src="http://wasp.warwick.ac.uk/swasp/main/cam1/image.jpg" />
         </div>
       </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <img width="100%" style="padding:0 10px" src="http://sat24.com/image2.ashx?region=ce&ir=true" />
+        </div>
+        <div class="col-sm-4">
+          <img width="100%" style="padding:0 10px" src="http://sat24.com/image2.ashx?region=ce&ir=false" />
+        </div>
+        <div class="col-sm-4">
+          <img width="100%" style="padding:0 10px" src="http://sat24.com/image2.ashx?region=ce&ir=true&type=ra&ra=true" />
+        </div>
+      </div>
+      
+      
     </div>
   </body>
 </html>
