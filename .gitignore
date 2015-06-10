@@ -2,4 +2,4 @@
 *.py~
 *.pyc
 */migrations/*.py
-static
+static/*
