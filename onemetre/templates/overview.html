@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% load environment_overview %}
+
+{% block title %}Overview{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="tablewrapper">
+        {% show_external_environment %}
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="tablewrapper">
+        {% show_internal_environment %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="tablewrapper">
+        {% show_power %}
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="tablewrapper">
+       {% show_telescope %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <img width="100%" style="padding:0 10px" src="http://wasp.warwick.ac.uk/swasp/main/cam3/image.jpg" />
+    </div>
+    <div class="col-sm-6">
+      <img width="100%" style="padding:0 10px" src="http://wasp.warwick.ac.uk/swasp/main/cam1/image.jpg" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <img width="100%" style="padding:0 10px" src="http://sat24.com/image2.ashx?region=ce&ir=true" />
+    </div>
+    <div class="col-sm-4">
+      <img width="100%" style="padding:0 10px" src="http://sat24.com/image2.ashx?region=ce&ir=false" />
+    </div>
+    <div class="col-sm-4">
+      <img width="100%" style="padding:0 10px" src="http://sat24.com/image2.ashx?region=ce&ir=true&type=ra&ra=true" />
+    </div>
+  </div>
+</div>
+{% endblock %}

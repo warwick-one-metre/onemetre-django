@@ -4,11 +4,6 @@ from .models import ExternalEnvironmentMeasurement, InternalEnvironmentMeasureme
 # Create your views here.
 
 def index(request):
-	latest_internal = ExternalEnvironmentMeasurement.objects.latest()
-
-	context = {
-		'latest_internal': latest_internal,
-	}
-
-	return render(request, 'environment/index.html', context)
+	context = {}
+	return render(request, 'environment/environment.html', context)
 
