@@ -37,6 +37,7 @@
           <ul class="nav navbar-nav">
             <li class="{% ifequal request.get_full_path "/" %}active{% endifequal %}"><a href="/">Overview</a></li>
             <li class="{% ifequal request.get_full_path "/environment/" %}active{% endifequal %}"><a href="/environment">Environment</a></li>
+            <li class="{% ifequal request.get_full_path "/power/" %}active{% endifequal %}"><a href="/power">Power</a></li>
             <li><a href="/admin">Admin</a></li>
           </ul>
         </div>

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Power{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="tablewrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th colspan="4">Power</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>  
+              <td class="tablelabel">Temp.:</td>
+              <td>20&#8451;</td>
+              <td class="tablelabel">Humidity:</td>
+              <td>90%</td>
+            </tr>
+            <tr>  
+              <td class="tablelabel">Trap Door:</td>
+              <td><span style="color: #C00">Open</span></td>
+              <td class="tablelabel">Side Door:</td>
+              <td><span style="color: #090">Closed</span></td>
+            </tr>
+            <tr>  
+              <td class="tablelabel">Dome:</td>
+              <td><span style="color: #090">Open</span></td>
+              <td class="tablelabel">Covers:</td>
+              <td><span style="color: #FA0">Mixed</span></td>
+            </tr>
+            <tr>
+              <td class="tableupdated" colspan="4">Updated XXX</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

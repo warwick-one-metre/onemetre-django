@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'onemetre',
-    'environment'
+    'environment',
+    'power'
 )
 
 MIDDLEWARE_CLASSES = (
