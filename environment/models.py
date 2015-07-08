@@ -18,12 +18,17 @@ class ExternalEnvironmentMeasurement(models.Model):
 
 class InternalEnvironmentMeasurement(models.Model):
 	time = models.DateTimeField()
-	east_dome_open = models.BooleanField()
-	east_dome_closed = models.BooleanField()
-	west_dome_open = models.BooleanField()
-	west_dome_closed = models.BooleanField()
-	hatch_closed = models.BooleanField()
-	trap_closed = models.BooleanField()
+
+	roomalert_temp = models.DecimalField(max_digits=5, decimal_places=2)
+	roomalert_humidity = models.DecimalField(max_digits=5, decimal_places=2)
+
+	dome_temp = models.DecimalField(max_digits=5, decimal_places=2)
+	dome_humidity = models.DecimalField(max_digits=5, decimal_places=2)
+
+	underfloor_temp = models.DecimalField(max_digits=5, decimal_places=2)
+	underfloor_humidity = models.DecimalField(max_digits=5, decimal_places=2)
+
+	truss_temp = models.DecimalField(max_digits=5, decimal_places=2)
 
 	class Meta:
 		get_latest_by = "time"
