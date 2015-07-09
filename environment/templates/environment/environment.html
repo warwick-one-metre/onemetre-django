@@ -56,8 +56,13 @@ $(function() {
 		});
 	}
 
-	loadTimeseriesPlot('json/temperature', '#temperature');
-	loadTimeseriesPlot('json/humidity', '#humidity');
+	function update() {
+		loadTimeseriesPlot('json/temperature', '#temperature');
+		loadTimeseriesPlot('json/humidity', '#humidity');
+		setTimeout(update, 60000);
+	}
+
+	update();
 });
 
 </script>
