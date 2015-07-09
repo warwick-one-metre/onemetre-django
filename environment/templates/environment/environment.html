@@ -7,6 +7,7 @@
 {% block body %}
 <script language="javascript" type="text/javascript" src="{% static 'jquery.flot.js' %}"></script>
 <script language="javascript" type="text/javascript" src="{% static 'jquery.flot.time.js' %}"></script>
+<script language="javascript" type="text/javascript" src="{% static 'jquery.flot.resize.js' %}"></script>
 <script type="text/javascript">
 
 $(function() {
@@ -17,74 +18,76 @@ $(function() {
 		shadowSize: 0
 	};
 
-	var data = [];
+	$.plot("#temperature", [], options);
+	$.plot("#humidity", [], options);
 
-	$.plot("#placeholder", data, options);
+	function loadTimeseriesPlot(url, id) {
+		function buildPlotData(json) {
+			plot_data = [];
+		        reference_time = json['reference_time'];
+		        jQuery.each(json['blocks'], function(_, block) {
+		            jQuery.each(block['series'], function(id, series) {
+		                data_index = block['data_columns'].indexOf(id);
+		                data = []
+		                jQuery.each(block['data'], function(_, d) {
+		                    data.push([ (d[0] + reference_time) * 1000, d[data_index] ]);
+		                });
 
-	var dataurl = 'json';
+		                series['data'] = data;
+		                plot_data.push(series);
+		            });
+		        });
 
-	function onDataReceived(json) {
-                // Build the data series
-                plot_data = [];
-                reference_time = json['reference_time'];
-                jQuery.each(json['blocks'], function(_, block) {
-                    jQuery.each(block['series'], function(id, series) {
-                        data_index = block['data_columns'].indexOf(id);
-                        data = []
-                        jQuery.each(block['data'], function(_, d) {
-                            data.push([ (d[0] + reference_time) * 1000, d[data_index] ]);
-                        });
+			return plot_data;
+		}
 
-                        series['data'] = data;
-                        plot_data.push(series);
-                    });
-                });
-
-		$.plot("#placeholder", plot_data, options);
+		$.ajax({
+			url: url,
+			type: "GET",
+			dataType: "json",
+			success: function(json) { $.plot(id, buildPlotData(json), options); }
+		});
 	}
 
-	$.ajax({
-		url: dataurl,
-		type: "GET",
-		dataType: "json",
-		success: onDataReceived
-	});
+	loadTimeseriesPlot('json/temperature', '#temperature');
+	loadTimeseriesPlot('json/humidity', '#humidity');
 });
 
 </script>
 <style>
-.demo-container {
+
+.plot-container {
 	box-sizing: border-box;
-	width: 850px;
+	width: 100%;
 	height: 450px;
 	padding: 20px 15px 15px 15px;
 	margin: 15px auto 30px auto;
-	border: 1px solid #ddd;
-	background: #fff;
-	background: linear-gradient(#f6f6f6 0, #fff 50px);
-	background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
-	background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
-	background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
-	background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
-	box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-	-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-	-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	border: 1px solid #eee;
 }
 
-.demo-placeholder {
+.plot-placeholder {
 	width: 100%;
 	height: 100%;
 	font-size: 14px;
 	line-height: 1.2em;
 }
 </style>
+
 <div class="container-fluid">
-	<div id="content">
-		<div class="demo-container">
-			<div id="placeholder" class="demo-placeholder"></div>
-		</div>
-	</div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="plot-container">
+          <div id="temperature" class="plot-placeholder"></div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="plot-container">
+          <div id="humidity" class="plot-placeholder"></div>
+        </div>
+      </div>
+    </div>  
+  </div>
 </div>
+
 {% endblock %}
