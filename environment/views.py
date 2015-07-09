@@ -26,7 +26,7 @@ def build_block(reference_time, measurement_types, queryset):
 
     for e in queryset:
         # Truncate time to previous second
-        datum = [ (e.time - reference_time).seconds ]
+        datum = [ int((e.time - reference_time).total_seconds()) ]
         for (id, label) in measurement_types:
             datum.append(float(getattr(e, id, 0)))
 
