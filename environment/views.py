@@ -37,14 +37,14 @@ def build_block(reference_time, measurement_types, queryset):
 def json_temperature(request):
 
     INTERNAL_MEASUREMENT_TYPES = (
-        ('roomalert_temp', 'Server Cupboard Temperature'),
-        ('dome_temp', 'Internal Temperature'),
-        ('underfloor_temp', 'Under Floor Temperature'),
-        ('truss_temp', 'Truss Temperature'),
+        ('roomalert_temp', 'Server Cupboard'),
+        ('dome_temp', 'Dome'),
+        ('underfloor_temp', 'Under Floor'),
+        ('truss_temp', 'Truss'),
     )
 
     EXTERNAL_MEASUREMENT_TYPES = (
-        ('air_temperature', 'Outside Temperature'),
+        ('air_temperature', 'Outside'),
     )
 
     reference_time = datetime.utcnow().replace(tzinfo=timezone.utc)
@@ -62,13 +62,13 @@ def json_temperature(request):
 def json_humidity(request):
 
     INTERNAL_MEASUREMENT_TYPES = (
-        ('roomalert_humidity', 'Server Cupboard Humidity'),
-        ('dome_humidity', 'Internal Humidity'),
-        ('underfloor_humidity', 'Under Floor Humidity'),
+        ('roomalert_humidity', 'Server Cupboard'),
+        ('dome_humidity', 'Dome'),
+        ('underfloor_humidity', 'Under Floor'),
     )
 
     EXTERNAL_MEASUREMENT_TYPES = (
-        ('air_humidity', 'Outside Humidity'),
+        ('air_humidity', 'Outside'),
     )
 
     reference_time = datetime.utcnow().replace(tzinfo=timezone.utc)
