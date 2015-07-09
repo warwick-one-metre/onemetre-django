@@ -1,7 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from environment.models import InternalEnvironmentMeasurement
-from datetime import datetime
-from enum import Enum
+from datetime import datetime, timezone
 import subprocess
 
 class Command(BaseCommand):
@@ -27,7 +26,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         measurement = InternalEnvironmentMeasurement(
-            time = datetime.now(),
+            time = datetime.now().replace(tzinfo=timezone.utc),
             roomalert_temp = self.query_float(Command.RoomAlertQuery.InternalTemperature),
             roomalert_humidity = self.query_float(Command.RoomAlertQuery.InternalHumidity),
             dome_temp = self.query_float(Command.RoomAlertQuery.DomeTemperature),
