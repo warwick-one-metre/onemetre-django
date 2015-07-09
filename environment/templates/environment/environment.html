@@ -8,15 +8,18 @@
 <script language="javascript" type="text/javascript" src="{% static 'jquery.flot.js' %}"></script>
 <script language="javascript" type="text/javascript" src="{% static 'jquery.flot.time.js' %}"></script>
 <script language="javascript" type="text/javascript" src="{% static 'jquery.flot.resize.js' %}"></script>
+<script language="javascript" type="text/javascript" src="{% static 'jquery.flot.axislabels.js' %}"></script>
 <script type="text/javascript">
 
 $(function() {
 	var options = {
 		lines: { show: true } ,
-  		xaxes: [ { mode: "time" } ],
-  		yaxes: [ { min: 0 }, { position: "right", } ],
+		axisLabels: { show: true },
+  		xaxes: [ { mode: 'time', axisLabel: 'UTC Hour' } ],
+  		yaxes: [ { min: 0, axisLabelPadding: 10 } ],
 		shadowSize: 0
 	};
+
 
 	$.plot("#temperature", [], options);
 	$.plot("#humidity", [], options);
@@ -45,7 +48,11 @@ $(function() {
 			url: url,
 			type: "GET",
 			dataType: "json",
-			success: function(json) { $.plot(id, buildPlotData(json), options); }
+			success: function(json)
+			{
+				options.yaxes[0].axisLabel = json['axis_label'];
+				$.plot(id, buildPlotData(json), options);
+			}
 		});
 	}
 

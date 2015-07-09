@@ -54,6 +54,7 @@ def json_temperature(request):
     json = {}
     json['reference_time'] = int(time.mktime(reference_time.timetuple()))
     json['blocks'] = [ internal, external ]
+    json['axis_label'] = 'Temperature (&deg;C)'
 
     return JsonResponse(json)
 
@@ -77,5 +78,5 @@ def json_humidity(request):
     json = {}
     json['reference_time'] = int(time.mktime(reference_time.timetuple()))
     json['blocks'] = [ internal, external ]
-
+    json['axis_label'] = 'Relative Humidity (%)'
     return JsonResponse(json)
