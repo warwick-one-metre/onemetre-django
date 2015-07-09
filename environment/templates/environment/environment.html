@@ -11,16 +11,10 @@
 
 $(function() {
 	var options = {
-		lines: {
-			show: true
-		},
-		points: {
-			show: true
-		},
-  	xaxes: [ { mode: "time" } ],
-  	yaxes: [ { min: 0 }, {
-  		position: "right",
-  	} ],
+		lines: { show: true } ,
+  		xaxes: [ { mode: "time" } ],
+  		yaxes: [ { min: 0 }, { position: "right", } ],
+		shadowSize: 0
 	};
 
 	var data = [];
@@ -29,9 +23,24 @@ $(function() {
 
 	var dataurl = 'json';
 
-	function onDataReceived(_data) {
-    data = _data;
-		$.plot("#placeholder", data, options);
+	function onDataReceived(json) {
+                // Build the data series
+                plot_data = [];
+                reference_time = json['reference_time'];
+                jQuery.each(json['blocks'], function(_, block) {
+                    jQuery.each(block['series'], function(id, series) {
+                        data_index = block['data_columns'].indexOf(id);
+                        data = []
+                        jQuery.each(block['data'], function(_, d) {
+                            data.push([ (d[0] + reference_time) * 1000, d[data_index] ]);
+                        });
+
+                        series['data'] = data;
+                        plot_data.push(series);
+                    });
+                });
+
+		$.plot("#placeholder", plot_data, options);
 	}
 
 	$.ajax({

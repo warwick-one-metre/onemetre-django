@@ -11,6 +11,30 @@ def index(request):
 	context = {}
 	return render(request, 'environment/environment.html', context)
 
+def build_block(reference_time, measurement_types, queryset):
+    block = {}
+    block['series'] = {}
+    block['data_columns'] = [ 'time' ]
+    block['data'] = []
+
+    for (id, label, type) in measurement_types:
+        block['data_columns'].append(id)
+
+        series = {}
+        series['label'] = label
+        series['yaxis'] = type.value
+        block['series'][id] = series
+
+    for e in queryset:
+        # Truncate time to previous second
+        datum = [ (e.time - reference_time).seconds ]
+        for (id, label, type) in measurement_types:
+            datum.append(float(getattr(e, id, 0)))
+
+        block['data'].append(datum)
+
+    return block
+
 def json(request):
 
     class MeasurementType(Enum):
@@ -18,8 +42,7 @@ def json(request):
         Humidity = 2
         Speed = 3
 
-    MEASUREMENT_TYPES = (
-        # Internal Measurements
+    INTERNAL_MEASUREMENT_TYPES = (
         ('roomalert_temp', 'Server Cupboard Temperature', MeasurementType.Temperature),
         ('roomalert_humidity', 'Server Cupboard Humidity', MeasurementType.Humidity),
         ('dome_temp', 'Internal Temperature', MeasurementType.Temperature),
@@ -27,40 +50,20 @@ def json(request):
         ('underfloor_temp', 'Under Floor Temperature', MeasurementType.Temperature),
         ('underfloor_humidity', 'Under Floor Humidity', MeasurementType.Humidity),
         ('truss_temp', 'Truss Temperature', MeasurementType.Temperature),
+    )
 
-        # External Measurements
+    EXTERNAL_MEASUREMENT_TYPES = (
         ('air_temperature', 'Outside Temperature', MeasurementType.Temperature),
         ('air_humidity', 'Outside Humidity', MeasurementType.Humidity),
         ('wind_speed', 'Wind Speed', MeasurementType.Speed),
     )
 
-    json = []
+    reference_time = datetime.utcnow().replace(tzinfo=timezone.utc)
+    internal = build_block(reference_time, INTERNAL_MEASUREMENT_TYPES, InternalEnvironmentMeasurement.objects.all())
+    external = build_block(reference_time, EXTERNAL_MEASUREMENT_TYPES, ExternalEnvironmentMeasurement.objects.all())
+ 
+    json = {}
+    json['reference_time'] = int(time.mktime(reference_time.timetuple()))
+    json['blocks'] = [ internal, external ]
 
-    data_arrays = {}
-    for (id, label, type) in MEASUREMENT_TYPES:
-        data = []
-        data_arrays[id] = data
-
-        measurement = {}
-        measurement['label'] = label
-        measurement['data'] = data
-        measurement['yaxis'] = type.value
-        json.append(measurement)
-
-    for e in ExternalEnvironmentMeasurement.objects.all():
-        ms = time.mktime(e.time.timetuple()) * 1000
-        data_arrays['air_temperature'].append([ms, float(e.air_temperature)])
-        data_arrays['air_humidity'].append([ms, float(e.air_humidity)])
-        data_arrays['wind_speed'].append([ms, float(e.wind_speed)])
-
-    for e in InternalEnvironmentMeasurement.objects.all():
-        ms = time.mktime(e.time.timetuple()) * 1000
-        data_arrays['roomalert_temp'].append([ms, float(e.roomalert_temp)])
-        data_arrays['roomalert_humidity'].append([ms, float(e.roomalert_humidity)])
-        data_arrays['dome_temp'].append([ms, float(e.dome_temp)])
-        data_arrays['dome_humidity'].append([ms, float(e.dome_humidity)])
-        data_arrays['underfloor_temp'].append([ms, float(e.underfloor_temp)])
-        data_arrays['underfloor_humidity'].append([ms, float(e.underfloor_humidity)])
-        data_arrays['truss_temp'].append([ms, float(e.truss_temp)])
-
-    return JsonResponse(json, safe=False)
+    return JsonResponse(json)
