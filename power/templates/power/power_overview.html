@@ -7,15 +7,15 @@
   <tbody>
     <tr>  
       <td class="tablelabel">Main Power:</td>
-      <td><span style="color: #090">Enabled</span></td>
+      <td><span style="color: #090">{{ latest_power.main_ups_status }}</span></td>
       <td class="tablelabel">UPS Status:</td>
-      <td><span style="color: #090">Good</span></td>
+      <td><span style="color: #090">{{ latest_power.main_ups_status }}</span></td>
     </tr>
     <tr>  
       <td class="tablelabel">UPS Charge:</td>
-      <td><span style="color: #090">100%</span></td>
+      <td><span style="color: #090">{{ latest_power.main_ups_battery }}%</span></td>
       <td class="tablelabel">UPS Load:</td>
-      <td><span style="color: #090">20%</span></td>
+      <td><span style="color: #090">{{ latest_power.main_ups_load }}%</span></td>
     </tr>
     <tr>  
       <td class="tablelabel">Tel. Drive:</td>
@@ -30,7 +30,7 @@
       <td><span style="color: #C00">Disabled</span></td>
     </tr>
     <tr>
-      <td class="tableupdated" colspan="4">Updated XXX</td>
+      <td class="tableupdated" colspan="4">Updated {{ latest_power.time|date:"Y-m-d H:i:s" }}</td>
     </tr>
   </tbody>
 </table>

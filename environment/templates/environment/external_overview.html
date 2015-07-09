@@ -7,24 +7,24 @@
   <tbody>
     <tr>  
       <td class="tablelabel">Wind Speed:</td>
-      <td>{{ latest_internal.wind_speed }} m/s</td>
+      <td>{{ latest_external.wind_speed }} m/s</td>
       <td class="tablelabel">Wind Dir.:</td>
-      <td>{{ latest_internal.wind_direction }}&#176;</td>
+      <td>{{ latest_external.wind_direction }}&#176;</td>
     </tr>
     <tr>
       <td class="tablelabel">Temperature:</td>
-      <td>{{ latest_internal.air_temperature }}&#8451;</td>
+      <td>{{ latest_external.air_temperature }}&#8451;</td>
       <td class="tablelabel">Humidity:</td>
-      <td>{{ latest_internal.air_humidity }}%</td>
+      <td>{{ latest_external.air_humidity }}%</td>
     </tr>
     <tr>
       <td class="tablelabel">Pressure:</td>
-      <td>{{ latest_internal.air_pressure }} mbar</td>
+      <td>{{ latest_external.air_pressure }} mbar</td>
       <td class="tablelabel">Rain:</td>
-      <td>{{ latest_internal.rain_amount }} mm</td>
+      <td>{{ latest_external.rain_amount }} mm</td>
     </tr>
     <tr>
-      <td class="tableupdated" colspan="4">Updated {{ latest_internal.time|date:"Y-m-d H:i:s" }}</td>
+      <td class="tableupdated" colspan="4">Updated {{ latest_external.time|date:"Y-m-d H:i:s" }}</td>
     </tr>
   </tbody>
 </table>

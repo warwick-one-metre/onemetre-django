@@ -5,17 +5,12 @@ register = template.Library()
 
 @register.inclusion_tag('environment/external_overview.html')
 def show_external_environment():
-    latest_internal = ExternalEnvironmentMeasurement.objects.latest()
-    return {'latest_internal': latest_internal}
+    latest_external = ExternalEnvironmentMeasurement.objects.latest()
+    return {'latest_external': latest_external}
 
 # TODO: Hook up real data
 @register.inclusion_tag('environment/internal_overview.html')
 def show_internal_environment():
-    return {}
-
-# TODO: Hook up real data
-@register.inclusion_tag('environment/power_overview.html')
-def show_power():
     return {}
 
 # TODO: Hook up real data
