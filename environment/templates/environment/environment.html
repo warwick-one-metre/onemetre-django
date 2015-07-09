@@ -37,6 +37,8 @@ $(function() {
 		                    data.push([ (d[0] + reference_time) * 1000, d[data_index] ]);
 		                });
 
+		                data.sort(function(a, b) { return a[0] - b[0] });
+
 		                series['data'] = data;
 		                plot_data.push(series);
 		            });
