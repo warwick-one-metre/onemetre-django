@@ -19,8 +19,8 @@ class PowerMeasurement(models.Model):
     UPS_STATUS_CHOICES = (
         (UPS_STATUS_UNKNOWN, 'Unknown'),
         (UPS_STATUS_ONLINE, 'Online'),
-        (UPS_STATUS_ONBATTERY, 'On battery'),
-        (UPS_STATUS_ONSMARTBOOST, 'On smart boost'),
+        (UPS_STATUS_ONBATTERY, 'Battery'),
+        (UPS_STATUS_ONSMARTBOOST, 'Smart boost'),
         (UPS_STATUS_TIMEDSLEEPING, 'Timed sleeping'),
         (UPS_STATUS_SOFTWAREBYPASS, 'Software bypass'),
         (UPS_STATUS_OFF, 'Off'),
@@ -45,6 +45,19 @@ class PowerMeasurement(models.Model):
 
     dome_ups_battery = models.CharField(max_length=3, default=0)
     dome_ups_load = models.CharField(max_length=3, default=0)
+
+    roomalert_powered = models.BooleanField(default=True)
+
+    pdu_nominal_computer = models.BooleanField(default=False)
+    pdu_telescope_12v_power = models.BooleanField(default=False)
+    pdu_telescope_80v_power = models.BooleanField(default=False)
+    pdu_webcam_power = models.BooleanField(default=False)
+    pdu_telescope_mixed_power = models.BooleanField(default=False)
+    pdu_cover_motors = models.BooleanField(default=False)
+    pdu_light = models.BooleanField(default=False)
+    pdu_redundant_computer = models.BooleanField(default=False)
+    pdu_dome_controler = models.BooleanField(default=False)
+    pdu_dome_power = models.BooleanField(default=False)
 
     class Meta:
         get_latest_by = "time"

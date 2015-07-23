@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
+{% load power_filters %}
 
 {% block title %}Power{% endblock %}
 
@@ -13,30 +14,81 @@
         <table class="table">
           <thead>
             <tr>
-              <th colspan="4">Power</th>
+              <th colspan="4">UPS</th>
             </tr>
           </thead>
           <tbody>
-            <tr>  
-              <td class="tablelabel">Temp.:</td>
-              <td>20&#8451;</td>
-              <td class="tablelabel">Humidity:</td>
-              <td>90%</td>
-            </tr>
-            <tr>  
-              <td class="tablelabel">Trap Door:</td>
-              <td><span style="color: #C00">Open</span></td>
-              <td class="tablelabel">Side Door:</td>
-              <td><span style="color: #090">Closed</span></td>
-            </tr>
-            <tr>  
-              <td class="tablelabel">Dome:</td>
-              <td><span style="color: #090">Open</span></td>
-              <td class="tablelabel">Covers:</td>
-              <td><span style="color: #FA0">Mixed</span></td>
+            <tr>
+              <td class="tablelabel">Pri. Status:</td>
+              <td>{{ latest_power.get_main_ups_status_display|ups_status }}</td>
+              <td class="tablelabel">Sec. Status:</td>
+              <td>{{ latest_power.get_dome_ups_status_display|ups_status }}</td>
             </tr>
             <tr>
-              <td class="tableupdated" colspan="4">Updated XXX</td>
+              <td class="tablelabel">Pri. Battery:</td>
+              <td>{{ latest_power.main_ups_battery|battery_percentage }}</td>
+              <td class="tablelabel">Sec. Battery:</td>
+              <td>{{ latest_power.dome_ups_battery|battery_percentage }}</td>
+            </tr>
+            <tr>
+              <td class="tablelabel">Pri. Load:</td>
+              <td>{{ latest_power.main_ups_load|load_percentage }}</td>
+              <td class="tablelabel">Sec. Load:</td>
+              <td>{{ latest_power.dome_ups_load|load_percentage }}</td>
+            </tr>
+            <tr>
+              <td class="tablelabel">Room Alert:</td>
+              <td>{{ latest_power.roomalert_powered|powerbattery }}</td>
+              <td></td><td></td>
+            </tr>
+            <tr>
+              <td class="tableupdated" colspan="4">Updated {{ latest_power.time|date:"Y-m-d H:i:s" }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="tablewrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th colspan="4">Power Distribution</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tablelabel">Tel. 12V:</td>
+              <td>{{ latest_power.pdu_telescope_12v_power|onoff }}</td>
+              <td class="tablelabel">Tel. 80V:</td>
+              <td>{{ latest_power.pdu_telescope_80v_power|onoff }}</td>
+            </tr>
+            <tr>
+              <td class="tablelabel">Tel. Mixed:</td>
+              <td>{{ latest_power.pdu_telescope_mixed_power|onoff }}</td>
+              <td class="tablelabel">Tel. Covers:</td>
+              <td>{{ latest_power.pdu_cover_motors|onoff }}</td>
+            </tr>
+            <tr>
+              <td class="tablelabel">Dome Controller:</td>
+              <td>{{ latest_power.pdu_dome_controler|onoff }}</td>
+              <td class="tablelabel">Dome Motors:</td>
+              <td>{{ latest_power.pdu_dome_power|onoff }}</td>
+            </tr>
+            <tr>
+              <td class="tablelabel">Main PC:</td>
+              <td>{{ latest_power.pdu_nominal_computer|onoff }}</td>
+              <td class="tablelabel">Backup PC:</td>
+              <td>{{ latest_power.pdu_redundant_computer|onoff }}</td>
+            </tr>
+            <tr>
+              <td class="tablelabel">Cupboard Mixed:</td>
+              <td>{{ latest_power.pdu_webcam_power|onoff }}</td>
+              <td class="tablelabel">Pier Light:</td>
+              <td>{{ latest_power.pdu_light|onoff }}</td>
+            </tr>
+            <tr>
+              <td class="tableupdated" colspan="4">Updated {{ latest_power.time|date:"Y-m-d H:i:s" }}</td>
             </tr>
           </tbody>
         </table>
