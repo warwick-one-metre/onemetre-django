@@ -25,7 +25,6 @@ def build_block(reference_time, measurement_types, queryset):
 
     for (id, label) in measurement_types:
         block['data_columns'].append(id)
-
         series = {}
         series['label'] = label
         block['series'][id] = series
@@ -52,8 +51,6 @@ def json_temperature(request):
         build_block(reference_time, NITESRoomAlertMeasurement.plot_temperature_curves, NITESRoomAlertMeasurement.objects.all()),
         build_block(reference_time, SWASPRoomAlertMeasurement.plot_temperature_curves, SWASPRoomAlertMeasurement.objects.all()),
     ]
-
-
 
     return JsonResponse(json)
 
