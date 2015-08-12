@@ -76,7 +76,7 @@ $(function() {
 .plot-container {
 	box-sizing: border-box;
 	width: 100%;
-	height: 450px;
+	height: 400px;
 	padding: 20px 15px 15px 15px;
 	margin: 15px auto 30px auto;
 }
@@ -138,35 +138,7 @@ $(function() {
       </div>
       <div class="col-sm-6">
         <div class="tablewrapper">
-          <table class="table" style="font-size:0.85em">
-            <thead>
-              <tr>
-                <th colspan="2">NITES Room Alert</th>
-                <th colspan="2" class="tableupdated">Updated {{ nites_roomalert.time|date:"Y-m-d H:i:s" }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="tablelabel">Room Alert:</td>
-                <td class="tablevalue">{{ nites_roomalert.roomalert_internal_temp }}&#8451;<br />{{ nites_roomalert.roomalert_internal_humidity }}% RH</td>
-                <td class="tablelabel">Dome:</td>
-                <td class="tablevalue">{{ nites_roomalert.centre_temp }}&#8451;<br />{{ nites_roomalert.centre_humidity }}% RH</td>
-              </tr>
-              <tr>
-                <td class="tablelabel">Internal:</td>
-                <td class="tablevalue">{{ nites_roomalert.internal_temp }}&#8451;</td>
-                <td class="tablelabel">Dome:</td>
-                <td class="tablevalue">{{ nites_roomalert.dome_open|openclose }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="tablewrapper">
-          <table class="table" style="font-size:0.85em">
+          <table class="table" style="font-size:0.85em">         
             <thead>
               <tr>
                 <th colspan="2">SuperWASP Room Alert</th>
@@ -192,6 +164,34 @@ $(function() {
                 <td class="tablelabel">Roof Power:</td>
                 <td class="tablevalue">{{ swasp_roomalert.aircon_airflow|onoff }}</td>
               </tr>
+            </tbody> 
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="tablewrapper">
+          <table class="table" style="font-size:0.85em">
+            <thead>
+              <tr>
+                <th colspan="2">NITES Room Alert</th>
+                <th colspan="2" class="tableupdated">Updated {{ nites_roomalert.time|date:"Y-m-d H:i:s" }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tablelabel">Room Alert:</td>
+                <td class="tablevalue">{{ nites_roomalert.roomalert_internal_temp }}&#8451;<br />{{ nites_roomalert.roomalert_internal_humidity }}% RH</td>
+                <td class="tablelabel">Dome:</td>
+                <td class="tablevalue">{{ nites_roomalert.centre_temp }}&#8451;<br />{{ nites_roomalert.centre_humidity }}% RH</td>
+              </tr>
+              <tr>
+                <td class="tablelabel">Internal:</td>
+                <td class="tablevalue">{{ nites_roomalert.internal_temp }}&#8451;</td>
+                <td class="tablelabel">Dome:</td>
+                <td class="tablevalue">{{ nites_roomalert.dome_open|openclose }}</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -211,6 +211,66 @@ $(function() {
                 <td class="tablevalue"><span style="color: #FFA500">UNKNOWN<br />(XXX% battery)</span></td>
                 <td class="tablelabel">SQT Dome:</td>
                 <td class="tablevalue"><span style="color: #FFA500">UNKNOWN<br />(XXX% battery)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="tablewrapper">
+          <table class="table" style="font-size:0.85em">
+            <thead>
+              <tr>
+                <th colspan="2">SQT Weather Station</th>
+                <th colspan="2" class="tableupdated">Updated XXX</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tablelabel">Wind:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XXX m/s from YYY&#176;</span></td>
+                <td class="tablelabel">Rain:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XX mm</span></td>
+              </tr>
+              <tr>
+                <td class="tablelabel">Temperature:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XXX&#8451;<br />YYY% RH</span></td>
+                <td class="tablelabel">Pressure:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XXX mBar</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="tablewrapper">
+          <table class="table" style="font-size:0.85em">
+            <thead>
+              <tr>
+                <th colspan="2">SWASP Weather Station</th>
+                <th colspan="2" class="tableupdated">Updated XXX</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tablelabel">Wind:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XXX m/s from YYY&#176;</span></td>
+                <td class="tablelabel">Rain:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XX mm</span></td>
+              </tr>
+              <tr>
+                <td class="tablelabel">Temperature:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XXX&#8451;<br />YYY% RH</span></td>
+                <td class="tablelabel">Pressure:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XXX mBar</span></td>
+              </tr>
+              <tr>
+                <td class="tablelabel">Sky Temp.:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XXX&#8451;<br />YYY% RH</span></td>
+                <td class="tablelabel">Dew Pt.:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XXX&#8451;</span></td>
               </tr>
             </tbody>
           </table>
