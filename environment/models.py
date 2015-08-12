@@ -16,18 +16,18 @@ class ExternalEnvironmentMeasurement(models.Model):
 		get_latest_by = "time"
 
 # The room alert in the 1m dome
-class InternalEnvironmentMeasurement(models.Model):
+class SQTRoomAlertMeasurement(models.Model):
 	time = models.DateTimeField()
 
-	roomalert_temp = models.DecimalField(max_digits=5, decimal_places=2)
-	roomalert_humidity = models.DecimalField(max_digits=5, decimal_places=2)
+	roomalert_time = models.DateTimeField()
+	roomalert_internal_temp = models.DecimalField(max_digits=5, decimal_places=2)
+	roomalert_internal_humidity = models.DecimalField(max_digits=5, decimal_places=2)
+	roomalert_powered = models.BooleanField()
 
-	dome_temp = models.DecimalField(max_digits=5, decimal_places=2)
-	dome_humidity = models.DecimalField(max_digits=5, decimal_places=2)
-
-	underfloor_temp = models.DecimalField(max_digits=5, decimal_places=2)
-	underfloor_humidity = models.DecimalField(max_digits=5, decimal_places=2)
-
+	internal_temp = models.DecimalField(max_digits=5, decimal_places=2)
+	internal_humidity = models.DecimalField(max_digits=5, decimal_places=2)
+	external_temp = models.DecimalField(max_digits=5, decimal_places=2)
+	external_humidity = models.DecimalField(max_digits=5, decimal_places=2)
 	truss_temp = models.DecimalField(max_digits=5, decimal_places=2)
 
 	class Meta:

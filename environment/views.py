@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from datetime import datetime, timezone
 from enum import Enum
 import time
-from .models import ExternalEnvironmentMeasurement, InternalEnvironmentMeasurement
+from .models import ExternalEnvironmentMeasurement, SQTRoomAlertMeasurement
 
 # Create your views here.
 
@@ -37,9 +37,9 @@ def build_block(reference_time, measurement_types, queryset):
 def json_temperature(request):
 
     INTERNAL_MEASUREMENT_TYPES = (
-        ('roomalert_temp', 'Server Cupboard'),
-        ('dome_temp', 'Dome'),
-        ('underfloor_temp', 'Under Floor'),
+        ('roomalert_internal_temp', 'SQTServer Cupboard'),
+        ('internal_temp', 'SQT Dome'),
+        ('external_temp', 'SQT Outside'),
         ('truss_temp', 'Truss'),
     )
 
@@ -48,7 +48,7 @@ def json_temperature(request):
     )
 
     reference_time = datetime.utcnow().replace(tzinfo=timezone.utc)
-    internal = build_block(reference_time, INTERNAL_MEASUREMENT_TYPES, InternalEnvironmentMeasurement.objects.all())
+    internal = build_block(reference_time, INTERNAL_MEASUREMENT_TYPES, SQTRoomAlertMeasurement.objects.all())
     external = build_block(reference_time, EXTERNAL_MEASUREMENT_TYPES, ExternalEnvironmentMeasurement.objects.all())
  
     json = {}
@@ -62,9 +62,9 @@ def json_temperature(request):
 def json_humidity(request):
 
     INTERNAL_MEASUREMENT_TYPES = (
-        ('roomalert_humidity', 'Server Cupboard'),
-        ('dome_humidity', 'Dome'),
-        ('underfloor_humidity', 'Under Floor'),
+        ('roomalert_internal_humidity', 'SQT Server Cupboard'),
+        ('internal_humidity', 'SQT Dome'),
+        ('external_humidity', 'SQT Outside'),
     )
 
     EXTERNAL_MEASUREMENT_TYPES = (
@@ -72,7 +72,7 @@ def json_humidity(request):
     )
 
     reference_time = datetime.utcnow().replace(tzinfo=timezone.utc)
-    internal = build_block(reference_time, INTERNAL_MEASUREMENT_TYPES, InternalEnvironmentMeasurement.objects.all())
+    internal = build_block(reference_time, INTERNAL_MEASUREMENT_TYPES, SQTRoomAlertMeasurement.objects.all())
     external = build_block(reference_time, EXTERNAL_MEASUREMENT_TYPES, ExternalEnvironmentMeasurement.objects.all())
  
     json = {}

@@ -1,5 +1,5 @@
 from django import template
-from environment.models import ExternalEnvironmentMeasurement, InternalEnvironmentMeasurement
+from environment.models import ExternalEnvironmentMeasurement, SQTRoomAlertMeasurement
 
 register = template.Library()
 

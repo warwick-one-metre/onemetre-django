@@ -1,16 +1,16 @@
 from django.contrib import admin
-from .models import ExternalEnvironmentMeasurement, InternalEnvironmentMeasurement, NITESRoomAlertMeasurement
+from .models import ExternalEnvironmentMeasurement, SQTRoomAlertMeasurement, NITESRoomAlertMeasurement
 
 class ExternalEnvironmentMeasurementAdmin(admin.ModelAdmin):
 	list_display = ('time', 'wind_speed', 'wind_direction', 'air_temperature', 'air_humidity', 'air_pressure', 'rain_amount', 'heater_temperature', 'heater_voltage')
 
-class InternalEnvironmentMeasurementAdmin(admin.ModelAdmin):
-	list_display = ('time', 'roomalert_temp', 'roomalert_humidity', 'dome_temp', 'dome_humidity', 'underfloor_temp', 'underfloor_humidity', 'truss_temp')
+class SQTRoomAlertMeasurementAdmin(admin.ModelAdmin):
+	list_display = ('time', 'roomalert_time', 'roomalert_internal_temp', 'roomalert_internal_humidity', 'internal_temp', 'internal_humidity', 'external_temp', 'external_humidity', 'truss_temp', 'roomalert_powered')
 
 class NITESRoomAlertMeasurementAdmin(admin.ModelAdmin):
 	list_display = ('time', 'roomalert_time', 'roomalert_internal_temp', 'roomalert_internal_humidity', 'internal_temp', 'centre_temp', 'centre_humidity', 'dome_open')
 
 # Register your models here.
 admin.site.register(ExternalEnvironmentMeasurement, ExternalEnvironmentMeasurementAdmin)
-admin.site.register(InternalEnvironmentMeasurement, InternalEnvironmentMeasurementAdmin)
+admin.site.register(SQTRoomAlertMeasurement, SQTRoomAlertMeasurementAdmin)
 admin.site.register(NITESRoomAlertMeasurement, NITESRoomAlertMeasurementAdmin)
