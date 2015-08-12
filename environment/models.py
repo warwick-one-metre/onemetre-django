@@ -1,7 +1,6 @@
 from django.db import models
 
-# Create your models here.
-
+# The Vaisala weather station on the LN2 plant
 class ExternalEnvironmentMeasurement(models.Model):
 	time = models.DateTimeField()
 	wind_speed = models.DecimalField(max_digits=5, decimal_places=1)
@@ -16,6 +15,7 @@ class ExternalEnvironmentMeasurement(models.Model):
 	class Meta:
 		get_latest_by = "time"
 
+# The room alert in the 1m dome
 class InternalEnvironmentMeasurement(models.Model):
 	time = models.DateTimeField()
 
@@ -29,6 +29,24 @@ class InternalEnvironmentMeasurement(models.Model):
 	underfloor_humidity = models.DecimalField(max_digits=5, decimal_places=2)
 
 	truss_temp = models.DecimalField(max_digits=5, decimal_places=2)
+
+	class Meta:
+		get_latest_by = "time"
+
+# The room alert in the 40cm dome
+class NITESRoomAlertMeasurement(models.Model):
+	time = models.DateTimeField()
+
+	roomalert_time = models.DateTimeField()
+	roomalert_internal_temp = models.DecimalField(max_digits=5, decimal_places=2)
+	roomalert_internal_humidity = models.DecimalField(max_digits=5, decimal_places=2)
+
+	internal_temp = models.DecimalField(max_digits=5, decimal_places=2)
+
+	centre_temp = models.DecimalField(max_digits=5, decimal_places=2)
+	centre_humidity = models.DecimalField(max_digits=5, decimal_places=2)
+
+	dome_open = models.BooleanField()
 
 	class Meta:
 		get_latest_by = "time"
