@@ -50,3 +50,25 @@ class NITESRoomAlertMeasurement(models.Model):
 
 	class Meta:
 		get_latest_by = "time"
+
+# The room alert in the swasp dome
+class SWASPRoomAlertMeasurement(models.Model):
+    time = models.DateTimeField()
+
+    roomalert_time = models.DateTimeField()
+    roomalert_internal_temp = models.DecimalField(max_digits=5, decimal_places=2)
+    roomalert_internal_humidity = models.DecimalField(max_digits=5, decimal_places=2)
+
+    rack_temp = models.DecimalField(max_digits=5, decimal_places=2)
+    rack_humidity = models.DecimalField(max_digits=5, decimal_places=2)
+
+    computer_room_temp = models.DecimalField(max_digits=5, decimal_places=2)
+    computer_room_humidity = models.DecimalField(max_digits=5, decimal_places=2)
+
+    aircon_airflow = models.BooleanField()
+    roof_position = models.BooleanField()
+    roof_power = models.BooleanField()
+
+    class Meta:
+        get_latest_by = "time"
+
