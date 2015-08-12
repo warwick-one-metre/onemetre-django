@@ -2,6 +2,8 @@
 
 {% load staticfiles %}
 
+{% load environment_filters %}
+
 {% block title %}Environment{% endblock %}
 
 {% block body %}
@@ -95,6 +97,127 @@ $(function() {
 
 <div class="container-fluid">
   <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="tablewrapper">
+          <table class="table" style="font-size:0.85em">
+            <thead>
+              <tr>
+                <th colspan="2">SQT Room Alert</th>
+                <th colspan="2" class="tableupdated">Updated {{ sqt_roomalert.time|date:"Y-m-d H:i:s" }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tablelabel">Room Alert:</td>
+                <td class="tablevalue">{{ sqt_roomalert.roomalert_internal_temp }}&#8451;<br />{{ sqt_roomalert.roomalert_internal_humidity }}% RH</td>
+                <td class="tablelabel">Dome:</td>
+                <td class="tablevalue">{{ sqt_roomalert.internal_temp }}&#8451;<br />{{ sqt_roomalert.internal_humidity }}% RH</td>
+              </tr>
+              <tr>
+                <td class="tablelabel">Outside:</td>
+                <td class="tablevalue">{{ sqt_roomalert.external_temp }}&#8451;<br />{{ sqt_roomalert.external_humidity }}% RH</td>
+                <td class="tablelabel">Truss:</td>
+                <td class="tablevalue">{{ sqt_roomalert.truss_temp }}&#8451;</td>
+              </tr>
+              <tr>
+                <td class="tablelabel">Trap Door:</td>
+                <td class="tablevalue"><span style="color: #FFA500">UNKNOWN</span></td>
+                <td class="tablelabel">Hatch:</td>
+                <td class="tablevalue"><span style="color: #FFA500">UNKNOWN</span></td>
+              </tr>
+              <tr>
+                <td class="tablelabel">Dome:</td>
+                <td class="tablevalue"><span style="color: #FFA500">UNKNOWN</span></td>
+                <td class="tablelabel">Covers:</td>
+                <td class="tablevalue"><span style="color: #FFA500">UNKNOWN</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="tablewrapper">
+          <table class="table" style="font-size:0.85em">
+            <thead>
+              <tr>
+                <th colspan="2">NITES Room Alert</th>
+                <th colspan="2" class="tableupdated">Updated {{ nites_roomalert.time|date:"Y-m-d H:i:s" }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tablelabel">Room Alert:</td>
+                <td class="tablevalue">{{ nites_roomalert.roomalert_internal_temp }}&#8451;<br />{{ nites_roomalert.roomalert_internal_humidity }}% RH</td>
+                <td class="tablelabel">Dome:</td>
+                <td class="tablevalue">{{ nites_roomalert.centre_temp }}&#8451;<br />{{ nites_roomalert.centre_humidity }}% RH</td>
+              </tr>
+              <tr>
+                <td class="tablelabel">Internal:</td>
+                <td class="tablevalue">{{ nites_roomalert.internal_temp }}&#8451;</td>
+                <td class="tablelabel">Dome:</td>
+                <td class="tablevalue">{{ nites_roomalert.dome_open|openclose }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="tablewrapper">
+          <table class="table" style="font-size:0.85em">
+            <thead>
+              <tr>
+                <th colspan="2">SuperWASP Room Alert</th>
+                <th colspan="2" class="tableupdated">Updated {{ swasp_roomalert.time|date:"Y-m-d H:i:s" }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tablelabel">Room Alert:</td>
+                <td class="tablevalue">{{ swasp_roomalert.roomalert_internal_temp }}&#8451;<br />{{ swasp_roomalert.roomalert_internal_humidity }}% RH</td>
+                <td class="tablelabel">Rack:</td>
+                <td class="tablevalue">{{ swasp_roomalert.rack_temp }}&#8451;<br />{{ swasp_roomalert.rack_humidity }}% RH</td>
+              </tr>
+              <tr>
+                <td class="tablelabel">Computer Room:</td>
+                <td class="tablevalue">{{ swasp_roomalert.computer_room_temp }}&#8451;<br />{{ swasp_roomalert.computer_room_humidity }}% RH</td>
+                <td class="tablelabel">Aircon:</td>
+                <td class="tablevalue">{{ swasp_roomalert.aircon_airflow|onoff }}</td>
+              </tr>
+              <tr>
+                <td class="tablelabel">Roof:</td>
+                <td class="tablevalue">{{ swasp_roomalert.aircon_airflow|opencloseinverted }}</td>
+                <td class="tablelabel">Roof Power:</td>
+                <td class="tablevalue">{{ swasp_roomalert.aircon_airflow|onoff }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="tablewrapper">
+          <table class="table" style="font-size:0.85em">
+            <thead>
+              <tr>
+                <th colspan="2">UPSes</th>
+                <th colspan="2" class="tableupdated">Updated XXX</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tablelabel">SQT Main:</td>
+                <td class="tablevalue"><span style="color: #FFA500">UNKNOWN<br />(XXX% battery)</span></td>
+                <td class="tablelabel">SQT Dome:</td>
+                <td class="tablevalue"><span style="color: #FFA500">UNKNOWN<br />(XXX% battery)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
     <div class="row">
       <div class="col-sm-6">
         <div class="plot-container">

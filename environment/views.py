@@ -3,13 +3,21 @@ from django.http import JsonResponse
 from datetime import datetime, timezone
 from enum import Enum
 import time
-from .models import ExternalEnvironmentMeasurement, SQTRoomAlertMeasurement
+from .models import *
 
 # Create your views here.
 
 def index(request):
-	context = {}
-	return render(request, 'environment/environment.html', context)
+    sqt_roomalert = SQTRoomAlertMeasurement.objects.latest()
+    nites_roomalert = NITESRoomAlertMeasurement.objects.latest()
+    swasp_roomalert = SWASPRoomAlertMeasurement.objects.latest()
+    context = {
+        'sqt_roomalert': sqt_roomalert,
+        'nites_roomalert': nites_roomalert,
+        'swasp_roomalert': swasp_roomalert
+    }
+
+    return render(request, 'environment/environment.html', context)
 
 def build_block(reference_time, measurement_types, queryset):
     block = {}
@@ -37,7 +45,7 @@ def build_block(reference_time, measurement_types, queryset):
 def json_temperature(request):
 
     INTERNAL_MEASUREMENT_TYPES = (
-        ('roomalert_internal_temp', 'SQTServer Cupboard'),
+        ('roomalert_internal_temp', 'SQT Server Cupboard'),
         ('internal_temp', 'SQT Dome'),
         ('external_temp', 'SQT Outside'),
         ('truss_temp', 'Truss'),
