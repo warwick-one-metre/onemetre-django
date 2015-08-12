@@ -43,48 +43,34 @@ def build_block(reference_time, measurement_types, queryset):
     return block
 
 def json_temperature(request):
-
-    INTERNAL_MEASUREMENT_TYPES = (
-        ('roomalert_internal_temp', 'SQT Server Cupboard'),
-        ('internal_temp', 'SQT Dome'),
-        ('external_temp', 'SQT Outside'),
-        ('truss_temp', 'Truss'),
-    )
-
-    EXTERNAL_MEASUREMENT_TYPES = (
-        ('air_temperature', 'Outside'),
-    )
-
     reference_time = datetime.utcnow().replace(tzinfo=timezone.utc)
-    internal = build_block(reference_time, INTERNAL_MEASUREMENT_TYPES, SQTRoomAlertMeasurement.objects.all())
-    external = build_block(reference_time, EXTERNAL_MEASUREMENT_TYPES, ExternalEnvironmentMeasurement.objects.all())
- 
+
     json = {}
     json['reference_time'] = int(time.mktime(reference_time.timetuple()))
-    json['blocks'] = [ internal, external ]
     json['axis_label'] = 'Temperature (&deg;C)'
+    json['blocks'] = [
+        build_block(reference_time, SQTRoomAlertMeasurement.plot_temperature_curves, SQTRoomAlertMeasurement.objects.all()),
+        build_block(reference_time, ExternalEnvironmentMeasurement.plot_temperature_curves, ExternalEnvironmentMeasurement.objects.all()),
+        build_block(reference_time, NITESRoomAlertMeasurement.plot_temperature_curves, NITESRoomAlertMeasurement.objects.all()),
+        build_block(reference_time, SWASPRoomAlertMeasurement.plot_temperature_curves, SWASPRoomAlertMeasurement.objects.all()),
+    ]
+
+
 
     return JsonResponse(json)
 
 
 def json_humidity(request):
-
-    INTERNAL_MEASUREMENT_TYPES = (
-        ('roomalert_internal_humidity', 'SQT Server Cupboard'),
-        ('internal_humidity', 'SQT Dome'),
-        ('external_humidity', 'SQT Outside'),
-    )
-
-    EXTERNAL_MEASUREMENT_TYPES = (
-        ('air_humidity', 'Outside'),
-    )
-
     reference_time = datetime.utcnow().replace(tzinfo=timezone.utc)
-    internal = build_block(reference_time, INTERNAL_MEASUREMENT_TYPES, SQTRoomAlertMeasurement.objects.all())
-    external = build_block(reference_time, EXTERNAL_MEASUREMENT_TYPES, ExternalEnvironmentMeasurement.objects.all())
- 
+
     json = {}
     json['reference_time'] = int(time.mktime(reference_time.timetuple()))
-    json['blocks'] = [ internal, external ]
     json['axis_label'] = 'Relative Humidity (%)'
+    json['blocks'] = [
+        build_block(reference_time, SQTRoomAlertMeasurement.plot_humidity_curves, SQTRoomAlertMeasurement.objects.all()),
+        build_block(reference_time, ExternalEnvironmentMeasurement.plot_humidity_curves, ExternalEnvironmentMeasurement.objects.all()),
+        build_block(reference_time, NITESRoomAlertMeasurement.plot_humidity_curves, NITESRoomAlertMeasurement.objects.all()),
+        build_block(reference_time, SWASPRoomAlertMeasurement.plot_humidity_curves, SWASPRoomAlertMeasurement.objects.all()),
+    ]
+
     return JsonResponse(json)
