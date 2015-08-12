@@ -1,7 +1,7 @@
 from django.db import models
 
 # The Vaisala weather station on the LN2 plant
-class ExternalEnvironmentMeasurement(models.Model):
+class SQTVaisalaMeasurement(models.Model):
     time = models.DateTimeField()
     wind_speed = models.DecimalField(max_digits=5, decimal_places=1)
     wind_direction = models.DecimalField(max_digits=3, decimal_places=0)

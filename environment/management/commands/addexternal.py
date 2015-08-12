@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from environment.models import ExternalEnvironmentMeasurement
+from environment.models import SQTVaisalaMeasurement
 from datetime import datetime
 from pytz import UTC, timezone
 
@@ -22,7 +22,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         dt = options['date'] + ' ' + options['time']
 
-        measurement = ExternalEnvironmentMeasurement(
+        measurement = SQTVaisalaMeasurement(
             time = UTC.localize(datetime.strptime(dt, '%Y-%m-%d %H:%M:%S')),
             wind_speed = options['wind_speed'],
             wind_direction = options['wind_direction'],

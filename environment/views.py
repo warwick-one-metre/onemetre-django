@@ -2,19 +2,17 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from datetime import datetime, timezone
 from enum import Enum
-import time
 from .models import *
+import time
 
 # Create your views here.
 
 def index(request):
-    sqt_roomalert = SQTRoomAlertMeasurement.objects.latest()
-    nites_roomalert = NITESRoomAlertMeasurement.objects.latest()
-    swasp_roomalert = SWASPRoomAlertMeasurement.objects.latest()
     context = {
-        'sqt_roomalert': sqt_roomalert,
-        'nites_roomalert': nites_roomalert,
-        'swasp_roomalert': swasp_roomalert
+        'sqt_roomalert': SQTRoomAlertMeasurement.objects.latest(),
+#        'sqt_vaisala': SQTVaisalaMeasurement.objects.latest(),
+        'nites_roomalert': NITESRoomAlertMeasurement.objects.latest(),
+        'swasp_roomalert': SWASPRoomAlertMeasurement.objects.latest()
     }
 
     return render(request, 'environment/environment.html', context)
@@ -50,7 +48,7 @@ def json_temperature(request):
     json['axis_label'] = 'Temperature (&deg;C)'
     json['blocks'] = [
         build_block(reference_time, SQTRoomAlertMeasurement.plot_temperature_curves, SQTRoomAlertMeasurement.objects.all()),
-        build_block(reference_time, ExternalEnvironmentMeasurement.plot_temperature_curves, ExternalEnvironmentMeasurement.objects.all()),
+#        build_block(reference_time, SQTVaisalaMeasurement.plot_temperature_curves, SQTVaisalaMeasurement.objects.all()),
         build_block(reference_time, NITESRoomAlertMeasurement.plot_temperature_curves, NITESRoomAlertMeasurement.objects.all()),
         build_block(reference_time, SWASPRoomAlertMeasurement.plot_temperature_curves, SWASPRoomAlertMeasurement.objects.all()),
     ]
@@ -68,7 +66,7 @@ def json_humidity(request):
     json['axis_label'] = 'Relative Humidity (%)'
     json['blocks'] = [
         build_block(reference_time, SQTRoomAlertMeasurement.plot_humidity_curves, SQTRoomAlertMeasurement.objects.all()),
-        build_block(reference_time, ExternalEnvironmentMeasurement.plot_humidity_curves, ExternalEnvironmentMeasurement.objects.all()),
+#        build_block(reference_time, SQTVaisalaMeasurement.plot_humidity_curves, SQTVaisalaMeasurement.objects.all()),
         build_block(reference_time, NITESRoomAlertMeasurement.plot_humidity_curves, NITESRoomAlertMeasurement.objects.all()),
         build_block(reference_time, SWASPRoomAlertMeasurement.plot_humidity_curves, SWASPRoomAlertMeasurement.objects.all()),
     ]
