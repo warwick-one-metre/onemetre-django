@@ -217,27 +217,33 @@ $(function() {
             <thead>
               <tr>
                 <th colspan="2">SWASP Weather Station</th>
-                <th colspan="2" class="tableupdated">Updated XXX</th>
+                <th colspan="2" class="tableupdated"><span id="swasp_wxd_updated">Fetching...</span></th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="tablelabel">Wind:</td>
-                <td class="tablevalue"><span style="color: #FFA500">XXX m/s from YYY&#176;</span></td>
+                <td class="tablelabel">Inside:</td>
+                <td class="tablevalue"><span id="swasp_wxd_inside"></td>
+                <td class="tablelabel">Outside:</td>
+                <td class="tablevalue"><span id="swasp_wxd_outside"></td>
+              </tr>
+              <tr>
                 <td class="tablelabel">Rain:</td>
-                <td class="tablevalue"><span style="color: #FFA500">XX mm</span></td>
-              </tr>
-              <tr>
-                <td class="tablelabel">Temperature:</td>
-                <td class="tablevalue"><span style="color: #FFA500">XXX&#8451;<br />YYY% RH</span></td>
-                <td class="tablelabel">Pressure:</td>
-                <td class="tablevalue"><span style="color: #FFA500">XXX mBar</span></td>
-              </tr>
-              <tr>
+                <td class="tablevalue"><span id="swasp_wxd_rain"></td>
                 <td class="tablelabel">Sky Temp.:</td>
-                <td class="tablevalue"><span style="color: #FFA500">XXX&#8451;<br />YYY% RH</span></td>
+                <td class="tablevalue"><span id="swasp_wxd_sky_temp"></td>
+              </tr>
+              <tr>
+                <td class="tablelabel">Wind:</td>
+                <td class="tablevalue"><span id="swasp_wxd_wind"></td>
+                <td class="tablelabel">Pressure:</td>
+                <td class="tablevalue"><span id="swasp_wxd_pressure"></td>
+              </tr>
+              <tr>
                 <td class="tablelabel">Dew Pt.:</td>
-                <td class="tablevalue"><span style="color: #FFA500">XXX&#8451;</span></td>
+                <td class="tablevalue"><span id="swasp_wxd_dew_point"></td>
+                <td class="tablelabel"></td>
+                <td class="tablevalue"></td>
               </tr>
             </tbody>
           </table>

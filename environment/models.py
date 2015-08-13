@@ -156,3 +156,48 @@ class SWASPRoomAlertMeasurement(models.Model):
     class Meta:
         get_latest_by = "time"
 
+# The SWASP weather station, parsed from the wxd log file
+class SWASPWXDMeasurement(models.Model):
+    time = models.DateTimeField()
+    measurement_time = models.DateTimeField()
+
+    wind_speed = models.DecimalField(max_digits=5, decimal_places=1)
+    wind_direction = models.DecimalField(max_digits=3, decimal_places=0)
+    inside_temperature = models.DecimalField(max_digits=4, decimal_places=1)
+    inside_humidity = models.DecimalField(max_digits=4, decimal_places=1)
+    pressure = models.DecimalField(max_digits=5, decimal_places=1)
+    rain_wet = models.BooleanField()
+    sky_temperature = models.DecimalField(max_digits=6, decimal_places=2)
+    outside_temperature = models.DecimalField(max_digits=4, decimal_places=1)
+    outside_humidity = models.DecimalField(max_digits=4, decimal_places=1)
+    dew_point = models.DecimalField(max_digits=4, decimal_places=1)
+
+    plot_temperature_curves = (
+        ('inside_temperature', 'SWASP Weather Inside'),
+        ('outside_temperature', 'SWASP Weather Outside'),
+        ('dew_point', 'SWASP Dew Point'),
+    )
+
+    plot_humidity_curves = (
+        ('inside_humidity', 'SWASP Weather Inside'),
+        ('outside_humidity', 'SWASP Weather Outside'),
+        ('computer_room_humidity', 'SWASP Computer room'),
+    )
+
+    def latest_measurement_json():
+        latest = SWASPWXDMeasurement.objects.latest()
+        rain_html = '<span style="color: #C00">WET</span>' if latest.rain_wet else '<span style="color: #090">DRY</span>'
+        return {
+            'updated': 'Updated ' + latest.time.strftime('%Y-%d-%m %H:%M:%S'),
+            'wind': '%s m/s from %s&deg' % (latest.wind_speed, latest.wind_direction),
+            'inside': '%s &#8451;<br />%s %% RH' % (latest.inside_temperature, latest.inside_humidity),
+            'outside': '%s &#8451;<br />%s %% RH' % (latest.outside_temperature, latest.outside_humidity),
+            'rain': rain_html,
+            'pressure': '%s mBar' % latest.pressure,
+            'sky_temp': '%s &#8451;' % latest.sky_temperature,
+            'dew_point': '%s &#8451;' % latest.dew_point
+        }
+
+    class Meta:
+        get_latest_by = "time"
+

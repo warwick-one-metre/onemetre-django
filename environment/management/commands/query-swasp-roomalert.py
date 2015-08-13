@@ -4,7 +4,7 @@ from environment.management.helpers import RoomAlertHelpers
 from datetime import datetime, timezone
 
 class Command(BaseCommand):
-    help = 'Queries the NITES Room Alert and inserts a new environment measurement into the database'
+    help = 'Queries the SWASP Room Alert and inserts a new environment measurement into the database'
 
     roomalert_ip = '192.168.0.46'
     dummy_json_url = 'http://localhost/static/testdata/swasp-roomalert'

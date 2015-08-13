@@ -13,8 +13,12 @@ class NITESRoomAlertMeasurementAdmin(admin.ModelAdmin):
 class SWASPRoomAlertMeasurementAdmin(admin.ModelAdmin):
 	list_display = ('time', 'roomalert_time', 'roomalert_internal_temp', 'roomalert_internal_humidity', 'rack_temp', 'rack_humidity', 'computer_room_temp', 'computer_room_humidity', 'aircon_airflow', 'roof_position', 'roof_power')
 
+class SWASPWXDMeasurementAdmin(admin.ModelAdmin):
+	list_display = ('time', 'measurement_time', 'wind_speed', 'wind_direction', 'inside_temperature', 'inside_humidity', 'pressure', 'rain_wet', 'sky_temperature', 'outside_temperature', 'outside_humidity', 'dew_point')
+
 # Register your models here.
 admin.site.register(SQTVaisalaMeasurement, SQTVaisalaMeasurementAdmin)
 admin.site.register(SQTRoomAlertMeasurement, SQTRoomAlertMeasurementAdmin)
 admin.site.register(NITESRoomAlertMeasurement, NITESRoomAlertMeasurementAdmin)
 admin.site.register(SWASPRoomAlertMeasurement, SWASPRoomAlertMeasurementAdmin)
+admin.site.register(SWASPWXDMeasurement, SWASPWXDMeasurementAdmin)

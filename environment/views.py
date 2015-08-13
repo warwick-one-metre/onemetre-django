@@ -50,6 +50,7 @@ def json_temperature(request):
 #        build_block(reference_time, SQTVaisalaMeasurement.plot_temperature_curves, SQTVaisalaMeasurement.objects.all()),
         build_block(reference_time, NITESRoomAlertMeasurement.plot_temperature_curves, NITESRoomAlertMeasurement.objects.all()),
         build_block(reference_time, SWASPRoomAlertMeasurement.plot_temperature_curves, SWASPRoomAlertMeasurement.objects.all()),
+        build_block(reference_time, SWASPWXDMeasurement.plot_temperature_curves, SWASPWXDMeasurement.objects.all()),
     ]
 
     return JsonResponse(json)
@@ -66,6 +67,7 @@ def json_humidity(request):
 #        build_block(reference_time, SQTVaisalaMeasurement.plot_humidity_curves, SQTVaisalaMeasurement.objects.all()),
         build_block(reference_time, NITESRoomAlertMeasurement.plot_humidity_curves, NITESRoomAlertMeasurement.objects.all()),
         build_block(reference_time, SWASPRoomAlertMeasurement.plot_humidity_curves, SWASPRoomAlertMeasurement.objects.all()),
+        build_block(reference_time, SWASPWXDMeasurement.plot_humidity_curves, SWASPWXDMeasurement.objects.all()),
     ]
 
     return JsonResponse(json)
@@ -74,7 +76,8 @@ def json_latest(request):
     json = {
         'sqt_roomalert': SQTRoomAlertMeasurement.latest_measurement_json(),
         'nites_roomalert': NITESRoomAlertMeasurement.latest_measurement_json(),
-        'swasp_roomalert': SWASPRoomAlertMeasurement.latest_measurement_json()
+        'swasp_roomalert': SWASPRoomAlertMeasurement.latest_measurement_json(),
+        'swasp_wxd': SWASPWXDMeasurement.latest_measurement_json()
     }
 
     return JsonResponse(json)
