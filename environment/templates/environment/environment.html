@@ -2,8 +2,6 @@
 
 {% load staticfiles %}
 
-{% load environment_filters %}
-
 {% block title %}Environment{% endblock %}
 
 {% block body %}
@@ -61,10 +59,27 @@ $(function() {
 		});
 	}
 
+	function loadPanels() {
+		$.ajax({
+			url: 'json/latest',
+			type: "GET",
+			dataType: "json",
+			success: function(json)
+			{
+                jQuery.each(json, function(block, children) {
+                    jQuery.each(children, function(key, value) {
+                        $('#' + block + '_' + key).html(value);
+                    });
+                });
+			}
+		});
+	}
+
 	function update() {
 		loadTimeseriesPlot('json/temperature', '#temperature');
 		loadTimeseriesPlot('json/humidity', '#humidity');
-		setTimeout(update, 60000);
+        loadPanels();
+		setTimeout(update, 30000);
 	}
 
 	update();
@@ -104,33 +119,33 @@ $(function() {
             <thead>
               <tr>
                 <th colspan="2">SQT Room Alert</th>
-                <th colspan="2" class="tableupdated">Updated {{ sqt_roomalert.time|date:"Y-m-d H:i:s" }}</th>
+                <th colspan="2" class="tableupdated"><span id="sqt_roomalert_updated">Fetching...</span></th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="tablelabel">Room Alert:</td>
-                <td class="tablevalue">{{ sqt_roomalert.roomalert_internal_temp }}&#8451;<br />{{ sqt_roomalert.roomalert_internal_humidity }}% RH</td>
+                <td class="tablevalue"><span id="sqt_roomalert_roomalert"></span></td>
                 <td class="tablelabel">Dome:</td>
-                <td class="tablevalue">{{ sqt_roomalert.internal_temp }}&#8451;<br />{{ sqt_roomalert.internal_humidity }}% RH</td>
+                <td class="tablevalue"><span id="sqt_roomalert_dome"></span></td>
               </tr>
               <tr>
                 <td class="tablelabel">Outside:</td>
-                <td class="tablevalue">{{ sqt_roomalert.external_temp }}&#8451;<br />{{ sqt_roomalert.external_humidity }}% RH</td>
+                <td class="tablevalue"><span id="sqt_roomalert_outside"></span></td>
                 <td class="tablelabel">Truss:</td>
-                <td class="tablevalue">{{ sqt_roomalert.truss_temp }}&#8451;</td>
+                <td class="tablevalue"><span id="sqt_roomalert_truss"></span></td>
               </tr>
               <tr>
                 <td class="tablelabel">Trap Door:</td>
-                <td class="tablevalue"><span style="color: #FFA500">UNKNOWN</span></td>
+                <td class="tablevalue"><span id="sqt_roomalert_trap_open"></span></td>
                 <td class="tablelabel">Hatch:</td>
-                <td class="tablevalue"><span style="color: #FFA500">UNKNOWN</span></td>
+                <td class="tablevalue"><span id="sqt_roomalert_hatch_open"></span></td>
               </tr>
               <tr>
                 <td class="tablelabel">Dome:</td>
-                <td class="tablevalue"><span style="color: #FFA500">UNKNOWN</span></td>
+                <td class="tablevalue"><span id="sqt_roomalert_dome_open"></span></td>
                 <td class="tablelabel">Covers:</td>
-                <td class="tablevalue"><span style="color: #FFA500">UNKNOWN</span></td>
+                <td class="tablevalue"><span id="sqt_roomalert_covers_open"></span></td>
               </tr>
             </tbody>
           </table>
@@ -142,29 +157,29 @@ $(function() {
             <thead>
               <tr>
                 <th colspan="2">SuperWASP Room Alert</th>
-                <th colspan="2" class="tableupdated">Updated {{ swasp_roomalert.time|date:"Y-m-d H:i:s" }}</th>
+                <th colspan="2" class="tableupdated"><span id="swasp_roomalert_updated">Fetching...</span></th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="tablelabel">Room Alert:</td>
-                <td class="tablevalue">{{ swasp_roomalert.roomalert_internal_temp }}&#8451;<br />{{ swasp_roomalert.roomalert_internal_humidity }}% RH</td>
+                <td class="tablevalue"><span id="swasp_roomalert_roomalert"></span></td>
                 <td class="tablelabel">Rack:</td>
-                <td class="tablevalue">{{ swasp_roomalert.rack_temp }}&#8451;<br />{{ swasp_roomalert.rack_humidity }}% RH</td>
+                <td class="tablevalue"><span id="swasp_roomalert_rack"></span></td>
               </tr>
               <tr>
                 <td class="tablelabel">Computer Room:</td>
-                <td class="tablevalue">{{ swasp_roomalert.computer_room_temp }}&#8451;<br />{{ swasp_roomalert.computer_room_humidity }}% RH</td>
+                <td class="tablevalue"><span id="swasp_roomalert_computer_room"></span></td>
                 <td class="tablelabel">Aircon:</td>
-                <td class="tablevalue">{{ swasp_roomalert.aircon_airflow|onoff }}</td>
+                <td class="tablevalue"><span id="swasp_roomalert_aircon"></span></td>
               </tr>
               <tr>
                 <td class="tablelabel">Roof:</td>
-                <td class="tablevalue">{{ swasp_roomalert.aircon_airflow|opencloseinverted }}</td>
+                <td class="tablevalue"><span id="swasp_roomalert_roof"></span></td>
                 <td class="tablelabel">Roof Power:</td>
-                <td class="tablevalue">{{ swasp_roomalert.aircon_airflow|onoff }}</td>
+                <td class="tablevalue"><span id="swasp_roomalert_roof_power"></span></td>
               </tr>
-            </tbody> 
+            </tbody>
           </table>
         </div>
       </div>
@@ -176,69 +191,21 @@ $(function() {
             <thead>
               <tr>
                 <th colspan="2">NITES Room Alert</th>
-                <th colspan="2" class="tableupdated">Updated {{ nites_roomalert.time|date:"Y-m-d H:i:s" }}</th>
+                <th colspan="2" class="tableupdated"><span id="nites_roomalert_updated"></th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="tablelabel">Room Alert:</td>
-                <td class="tablevalue">{{ nites_roomalert.roomalert_internal_temp }}&#8451;<br />{{ nites_roomalert.roomalert_internal_humidity }}% RH</td>
+                <td class="tablevalue"><span id="nites_roomalert_roomalert"></td>
                 <td class="tablelabel">Dome:</td>
-                <td class="tablevalue">{{ nites_roomalert.centre_temp }}&#8451;<br />{{ nites_roomalert.centre_humidity }}% RH</td>
+                <td class="tablevalue"><span id="nites_roomalert_dome"></td>
               </tr>
               <tr>
                 <td class="tablelabel">Internal:</td>
-                <td class="tablevalue">{{ nites_roomalert.internal_temp }}&#8451;</td>
+                <td class="tablevalue"><span id="nites_roomalert_internal"></td>
                 <td class="tablelabel">Dome:</td>
-                <td class="tablevalue">{{ nites_roomalert.dome_open|openclose }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="tablewrapper">
-          <table class="table" style="font-size:0.85em">
-            <thead>
-              <tr>
-                <th colspan="2">UPSes</th>
-                <th colspan="2" class="tableupdated">Updated XXX</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="tablelabel">SQT Main:</td>
-                <td class="tablevalue"><span style="color: #FFA500">UNKNOWN<br />(XXX% battery)</span></td>
-                <td class="tablelabel">SQT Dome:</td>
-                <td class="tablevalue"><span style="color: #FFA500">UNKNOWN<br />(XXX% battery)</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="tablewrapper">
-          <table class="table" style="font-size:0.85em">
-            <thead>
-              <tr>
-                <th colspan="2">SQT Weather Station</th>
-                <th colspan="2" class="tableupdated">Updated XXX</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="tablelabel">Wind:</td>
-                <td class="tablevalue"><span style="color: #FFA500">XXX m/s from YYY&#176;</span></td>
-                <td class="tablelabel">Rain:</td>
-                <td class="tablevalue"><span style="color: #FFA500">XX mm</span></td>
-              </tr>
-              <tr>
-                <td class="tablelabel">Temperature:</td>
-                <td class="tablevalue"><span style="color: #FFA500">XXX&#8451;<br />YYY% RH</span></td>
-                <td class="tablelabel">Pressure:</td>
-                <td class="tablevalue"><span style="color: #FFA500">XXX mBar</span></td>
+                <td class="tablevalue"><span id="nites_roomalert_dome_open"></td>
               </tr>
             </tbody>
           </table>
@@ -275,6 +242,36 @@ $(function() {
             </tbody>
           </table>
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="tablewrapper">
+          <table class="table" style="font-size:0.85em">
+            <thead>
+              <tr>
+                <th colspan="2">SQT Weather Station</th>
+                <th colspan="2" class="tableupdated">Updated XXX</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tablelabel">Wind:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XXX m/s from YYY&#176;</span></td>
+                <td class="tablelabel">Rain:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XX mm</span></td>
+              </tr>
+              <tr>
+                <td class="tablelabel">Temperature:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XXX&#8451;<br />YYY% RH</span></td>
+                <td class="tablelabel">Pressure:</td>
+                <td class="tablevalue"><span style="color: #FFA500">XXX mBar</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-6">
       </div>
     </div>
     <div class="row">

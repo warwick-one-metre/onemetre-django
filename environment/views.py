@@ -69,3 +69,13 @@ def json_humidity(request):
     ]
 
     return JsonResponse(json)
+
+def json_latest(request):
+    json = {
+        'sqt_roomalert': SQTRoomAlertMeasurement.latest_measurement_json(),
+        'nites_roomalert': NITESRoomAlertMeasurement.latest_measurement_json(),
+        'swasp_roomalert': SWASPRoomAlertMeasurement.latest_measurement_json()
+    }
+
+    return JsonResponse(json)
+

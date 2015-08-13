@@ -51,6 +51,20 @@ class SQTRoomAlertMeasurement(models.Model):
         ('external_humidity', 'SQT Outside'),
     )
 
+    def latest_measurement_json():
+        latest = SQTRoomAlertMeasurement.objects.latest()
+        return {
+            'updated': 'Updated ' + latest.time.strftime('%Y-%d-%m %H:%M:%S'),
+            'roomalert': '%s &#8451;<br />%s %% RH' % (latest.roomalert_internal_temp, latest.roomalert_internal_humidity),
+            'dome': '%s &#8451;<br />%s %% RH' % (latest.internal_temp, latest.internal_humidity),
+            'outside': '%s &#8451;<br />%s %% RH' % (latest.external_temp, latest.external_humidity),
+            'truss': '%s &#8451;' % latest.external_temp,
+            'trap_open': '<span style="color: #FFA500">UNKNOWN</span>',
+            'hatch_open': '<span style="color: #FFA500">UNKNOWN</span>',
+            'dome_open': '<span style="color: #FFA500">UNKNOWN</span>',
+            'covers_open': '<span style="color: #FFA500">UNKNOWN</span>',
+        }
+
     class Meta:
         get_latest_by = "time"
 
@@ -79,6 +93,17 @@ class NITESRoomAlertMeasurement(models.Model):
         ('roomalert_internal_humidity', 'NITES Room Alert'),
         ('centre_humidity', 'NITES Dome'),
     )
+
+    def latest_measurement_json():
+        latest = NITESRoomAlertMeasurement.objects.latest()
+        dome_html = '<span style="color: #090">OPEN</span>' if latest.dome_open else '<span style="color: #C00">CLOSED</span>'
+        return {
+            'updated': 'Updated ' + latest.time.strftime('%Y-%d-%m %H:%M:%S'),
+            'roomalert': '%s &#8451;<br />%s %% RH' % (latest.roomalert_internal_temp, latest.roomalert_internal_humidity),
+            'dome': '%s &#8451;<br />%s %% RH' % (latest.centre_temp, latest.centre_humidity),
+            'internal': '%s &#8451;' % latest.internal_temp,
+            'dome_open': dome_html,
+        }
 
     class Meta:
         get_latest_by = "time"
@@ -112,6 +137,21 @@ class SWASPRoomAlertMeasurement(models.Model):
         ('rack_humidity', 'SWASP Rack'),
         ('computer_room_humidity', 'SWASP Computer room'),
     )
+
+    def latest_measurement_json():
+        latest = SWASPRoomAlertMeasurement.objects.latest()
+        aircon_html = '<span style="color: #090">ON</span>' if latest.aircon_airflow else '<span style="color: #C00">OFF</span>'
+        roof_html = '<span style="color: #C00">CLOSED</span>' if latest.roof_position else '<span style="color: #090">OPEN</span>'
+        roof_power_html = '<span style="color: #090">ON</span>' if latest.roof_power else '<span style="color: #C00">OFF</span>'
+        return {
+            'updated': 'Updated ' + latest.time.strftime('%Y-%d-%m %H:%M:%S'),
+            'roomalert': '%s &#8451;<br />%s %% RH' % (latest.roomalert_internal_temp, latest.roomalert_internal_humidity),
+            'rack': '%s &#8451;<br />%s %% RH' % (latest.rack_temp, latest.rack_humidity),
+            'computer_room': '%s &#8451;<br />%s %% RH' % (latest.computer_room_temp, latest.computer_room_humidity),
+            'aircon': aircon_html,
+            'roof': roof_html,
+            'roof_power': roof_power_html,
+        }
 
     class Meta:
         get_latest_by = "time"
