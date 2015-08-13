@@ -29,6 +29,11 @@ $(function() {
 		function buildPlotData(json) {
 			plot_data = [];
 		        reference_time = json['reference_time'];
+
+                // Plot the last 24 hours
+                options.xaxes[0].min = (json['reference_time'] - 86400) * 1000;
+                options.xaxes[0].max = json['reference_time'] * 1000;
+
 		        jQuery.each(json['blocks'], function(_, block) {
 		            jQuery.each(block['series'], function(id, series) {
 		                data_index = block['data_columns'].indexOf(id);
