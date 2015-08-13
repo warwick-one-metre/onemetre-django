@@ -1,25 +1,19 @@
 from django.core.management.base import BaseCommand
 from environment.models import SQTRoomAlertMeasurement
+from environment.management.helpers import RoomAlertHelpers
 from datetime import datetime, timezone
-import requests
 
 class Command(BaseCommand):
     help = 'Queries the SQT Room Alert and inserts a new environment measurement into the database'
 
-#   roomalert_url = 'http://192.168.0.47/getData.htm'
-    roomalert_url = 'http://localhost/static/testdata/sqt-roomalert'
+    roomalert_ip = '192.168.0.47'
+    dummy_json_url = 'http://localhost/static/testdata/sqt-roomalert'
     query_timeout = 2.0
 
     def handle(self, *args, **options):
         try:
-            r = requests.get(self.roomalert_url, timeout=self.query_timeout)
-            if r.status_code != requests.codes.ok:
-                message = 'Invalid http status: ' + str(r.status_code) + '. ' + \
-                          'Query was: `' + self.roomalert_url + '`. ' + \
-                          'Response header was: ' + str(r.headers) + '.'
-                raise Exception(message)
-
-            data = r.json()
+#            data = RoomAlertHelpers.query_dummy_json(self.roomalert_url, self.query_timeout)
+            data = RoomAlertHelpers.query_roomalert_json(self.roomalert_ip, self.query_timeout)
 
             parsed_roomalert_time = datetime.strptime(data['date'], "%m/%d/%y %H:%M:%S")
             measurement = SQTRoomAlertMeasurement(
