@@ -86,7 +86,6 @@ class NITESRoomAlertMeasurement(models.Model):
     plot_temperature_curves = (
         ('roomalert_internal_temp', 'NITES Room Alert'),
         ('centre_temp', 'NITES Dome'),
-        ('internal_temp', 'NITES Internal'),
     )
 
     plot_humidity_curves = (
@@ -126,17 +125,9 @@ class SWASPRoomAlertMeasurement(models.Model):
     roof_position = models.BooleanField()
     roof_power = models.BooleanField()
 
-    plot_temperature_curves = (
-        ('roomalert_internal_temp', 'SWASP Room Alert'),
-        ('rack_temp', 'SWASP Rack'),
-        ('computer_room_temp', 'SWASP Computer room'),
-    )
+    plot_temperature_curves = ()
 
-    plot_humidity_curves = (
-        ('roomalert_internal_humidity', 'SWASP Room Alert'),
-        ('rack_humidity', 'SWASP Rack'),
-        ('computer_room_humidity', 'SWASP Computer room'),
-    )
+    plot_humidity_curves = ()
 
     def latest_measurement_json():
         latest = SWASPRoomAlertMeasurement.objects.latest()
@@ -173,15 +164,12 @@ class SWASPWXDMeasurement(models.Model):
     dew_point = models.DecimalField(max_digits=4, decimal_places=1)
 
     plot_temperature_curves = (
-        ('inside_temperature', 'SWASP Weather Inside'),
-        ('outside_temperature', 'SWASP Weather Outside'),
+        ('outside_temperature', 'SWASP Weather Station'),
         ('dew_point', 'SWASP Dew Point'),
     )
 
     plot_humidity_curves = (
-        ('inside_humidity', 'SWASP Weather Inside'),
-        ('outside_humidity', 'SWASP Weather Outside'),
-        ('computer_room_humidity', 'SWASP Computer room'),
+        ('outside_humidity', 'SWASP Weather Station'),
     )
 
     def latest_measurement_json():
