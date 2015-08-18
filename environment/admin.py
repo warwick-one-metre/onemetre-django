@@ -2,19 +2,19 @@ from django.contrib import admin
 from .models import *
 
 class SQTVaisalaMeasurementAdmin(admin.ModelAdmin):
-	list_display = ('time', 'wind_speed', 'wind_direction', 'air_temperature', 'air_humidity', 'air_pressure', 'rain_amount', 'heater_temperature', 'heater_voltage')
+	list_display = SQTVaisalaMeasurement._meta.get_all_field_names()
 
 class SQTRoomAlertMeasurementAdmin(admin.ModelAdmin):
-	list_display = ('time', 'roomalert_time', 'roomalert_internal_temp', 'roomalert_internal_humidity', 'internal_temp', 'internal_humidity', 'external_temp', 'external_humidity', 'truss_temp', 'roomalert_powered')
+	list_display = SQTRoomAlertMeasurement._meta.get_all_field_names()
 
 class NITESRoomAlertMeasurementAdmin(admin.ModelAdmin):
-	list_display = ('time', 'roomalert_time', 'roomalert_internal_temp', 'roomalert_internal_humidity', 'internal_temp', 'centre_temp', 'centre_humidity', 'dome_open')
+	list_display = NITESRoomAlertMeasurement._meta.get_all_field_names()
 
 class SWASPRoomAlertMeasurementAdmin(admin.ModelAdmin):
-	list_display = ('time', 'roomalert_time', 'roomalert_internal_temp', 'roomalert_internal_humidity', 'rack_temp', 'rack_humidity', 'computer_room_temp', 'computer_room_humidity', 'aircon_airflow', 'roof_position', 'roof_power')
+	list_display = SWASPRoomAlertMeasurement._meta.get_all_field_names()
 
 class SWASPWXDMeasurementAdmin(admin.ModelAdmin):
-	list_display = ('time', 'measurement_time', 'wind_speed', 'wind_direction', 'inside_temperature', 'inside_humidity', 'pressure', 'rain_wet', 'sky_temperature', 'outside_temperature', 'outside_humidity', 'dew_point')
+	list_display = SWASPWXDMeasurement._meta.get_all_field_names()
 
 # Register your models here.
 admin.site.register(SQTVaisalaMeasurement, SQTVaisalaMeasurementAdmin)
